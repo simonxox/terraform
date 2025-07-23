@@ -1,5 +1,5 @@
 ami                 = "ami-0d03cb826412c6b0f"
-instance_type       = "t2.medium"
+instance_type       = "t2.micro"
 key_name            = "fun"
 subnet_id           = "subnet-0c6f3359d78d8b511"
 security_group_ids  = ["sg-0e69148bbe20dadeb"]
