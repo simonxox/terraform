@@ -2,9 +2,15 @@ name: Terraform CI/CD
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      action:
+        description: 'Terraform Action'
+        required: true
+        default: apply
+        type: choice
+        options:
+          - apply
+          - destroy
 
 env:
   TF_DIR: ./day-3 all config
@@ -34,5 +40,5 @@ jobs:
       - name: 📋 Terraform Plan
         run: terraform plan
 
-      - name: 🚀 Terraform Apply
-        run: terraform apply -auto-approve
+      - name: 🚀 Terraform ${{ github.event.inputs.action }}
+        run: terraform ${{ github.event.inputs.action }} -auto-approve
