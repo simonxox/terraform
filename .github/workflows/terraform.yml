@@ -1,0 +1,36 @@
+name: Terraform CI/CD
+
+on:
+  workflow_dispatch:        # You can trigger it manually
+  push:
+    branches:
+      - main                # Automatically runs on push to main
+
+env:
+  TF_DIR: ./day-3 all config   # Path to your Terraform code
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ env.TF_DIR }}
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: 🧪 Terraform Init
+        run: terraform init
+
+      - name: 📋 Terraform Plan
+        run: terraform plan
+
+      - name: 🚀 Terraform Apply
+        run: terraform apply -auto-approve
