@@ -2,7 +2,7 @@ resource "aws_instance" "name" {
     ami = var.ami_id
     instance_type = var.instance_id
 tags = {
-  Name = "hellofromjenkins"
+  Name = "from github actions"
 }
 
   
