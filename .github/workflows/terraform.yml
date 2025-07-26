@@ -1,15 +1,20 @@
 name: Terraform CI/CD
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main           # Auto plan on PRs to main branch
+  push:
+    branches:
+      - main           # Auto apply on merge to main
+  workflow_dispatch:   # Manual trigger for destroy
     inputs:
       action:
-        description: 'Terraform Action'
+        description: 'Terraform action'
         required: true
-        default: apply
+        default: destroy
         type: choice
         options:
-          - apply
           - destroy
 
 env:
@@ -20,7 +25,6 @@ env:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: ${{ env.TF_DIR }}
@@ -40,5 +44,10 @@ jobs:
       - name: 📋 Terraform Plan
         run: terraform plan
 
-      - name: 🚀 Terraform ${{ github.event.inputs.action }}
-        run: terraform ${{ github.event.inputs.action }} -auto-approve
+      - name: 🚀 Terraform Apply (on push to main)
+        if: github.event_name == 'push'
+        run: terraform apply -auto-approve
+
+      - name: 💣 Terraform Destroy (manual only)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
+        run: terraform destroy -auto-approve
