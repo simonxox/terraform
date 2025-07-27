@@ -3,11 +3,17 @@ name: Terraform CI/CD
 on:
   pull_request:
     branches:
-      - main           # Auto plan on PRs to main branch
+      - main
+    paths:
+      - 'day-3 all config/**'   # Only trigger if PR touches this folder
+
   push:
     branches:
-      - main           # Auto apply on merge to main
-  workflow_dispatch:   # Manual trigger for destroy
+      - main
+    paths:
+      - 'day-3 all config/**'   # Only trigger if push modifies this folder
+
+  workflow_dispatch:
     inputs:
       action:
         description: 'Terraform action'
