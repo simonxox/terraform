@@ -1,23 +1,27 @@
 resource "aws_launch_template" "this" {
-  name_prefix   = var.name
-  description   = var.description
+  name_prefix   = var.lt_name_prefix
   image_id      = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
 
-  network_interfaces {
-    security_groups             = var.security_group_ids
-    associate_public_ip_address = false
-  }
+
+network_interfaces {
+  associate_public_ip_address = false
+  security_groups             = var.security_group_ids
+}
+
+
+  user_data = var.user_data != "" ? base64encode(var.user_data) : null
 
   tag_specifications {
     resource_type = "instance"
+
     tags = {
-      Name = var.name
+      Name = "${var.lt_name_prefix}-instance"
     }
   }
 
-  lifecycle {
-    create_before_destroy = true
+  tags = {
+    Name = "${var.lt_name_prefix}-lt"
   }
 }

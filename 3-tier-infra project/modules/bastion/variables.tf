@@ -1,24 +1,29 @@
-
 variable "ami" {
-  type = string
+  description = "AMI ID for Bastion host"
+  type        = string
 }
 
 variable "instance_type" {
-  type = string
-}
-
-variable "key_name" {
-  type = string
+  description = "Bastion EC2 instance type"
+  type        = string
 }
 
 variable "subnet_id" {
-  type = string
+  description = "Public Subnet ID for Bastion host"
+  type        = string
 }
 
 variable "security_group_ids" {
-  type = list(string)
+  description = "List of Security Group IDs for Bastion"
+  type        = list(string)
+}
+
+variable "key_name" {
+  description = "Key pair name"
+  type        = string
 }
 
 variable "name" {
-  type = string
+  description = "Tag Name"
+  type        = string
 }

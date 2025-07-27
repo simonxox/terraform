@@ -1,12 +1,11 @@
-variable "autoscaling_groups" {
+variable "asg_configs" {
+  description = "Map of autoscaling configurations"
   type = map(object({
-    desired_capacity        = number
-    max_size                = number
-    min_size                = number
-    subnet_ids              = list(string)
-    target_group_arns       = list(string)
-    launch_template_id      = string
-    launch_template_version = string
-    tag_name                = string
+    max_size            = number
+    min_size            = number
+    desired_capacity    = number
+    subnet_ids          = list(string)
+    target_group_arns   = list(string)
+    launch_template_id  = string
   }))
 }

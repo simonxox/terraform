@@ -1,17 +1,6 @@
-# ✅ terraform.tfvars - Fully Updated
-
-bastion_ami           = "ami-0d03cb826412c6b0f"  # valid Amazon Linux 2 AMI in ap-south-1
-bastion_instance_type = "t2.micro"
-bastion_key_name      = "fun"
-
-db_identifier     = "book-rds"
-subnet_group_name = "db-subnet-group"
-db_name           = "mydb"
-db_username       = "admin"
-db_password       = "password123"
-
-vpc_name   = "three-tier-vpc"
-vpc_cidr   = "172.20.0.0/16"
+# ✅ VPC
+vpc_name = "three-tier-vpc"
+vpc_cidr = "172.20.0.0/16"
 
 public_subnets = {
   pub1 = { cidr = "172.20.1.0/24", az = "ap-south-1a", name = "pub-1a" }
@@ -25,6 +14,7 @@ private_subnets = {
   prvt6 = { cidr = "172.20.6.0/24", az = "ap-south-1b", name = "prvt-6b" }
 }
 
+# ✅ Security Groups
 security_groups = {
   "bastion-host" = {
     name        = "bastion-host"
@@ -96,6 +86,7 @@ security_groups = {
   }
 }
 
+# ✅ Launch Templates
 launch_templates = {
   "frontend" = {
     name               = "frontend"
@@ -103,7 +94,7 @@ launch_templates = {
     ami_id             = "ami-08d7e81067277759e"
     instance_type      = "t2.micro"
     key_name           = "fun"
-    security_group_ids = [] # dynamically replaced
+    security_group_ids = [] # filled dynamically
   }
 
   "backend" = {
@@ -112,17 +103,18 @@ launch_templates = {
     ami_id             = "ami-0bbe8cbbeb9dffc7f"
     instance_type      = "t2.micro"
     key_name           = "fun"
-    security_group_ids = [] # dynamically replaced
+    security_group_ids = [] # filled dynamically
   }
 }
 
+# ✅ Auto Scaling Groups
 autoscaling_groups = {
   "frontend-asg" = {
     desired_capacity        = 1
     max_size                = 1
     min_size                = 1
-    subnet_ids              = [] # replaced via module
-    target_group_arns       = [] # replaced via module
+    subnet_ids              = []
+    target_group_arns       = []
     launch_template_id      = ""
     launch_template_version = "$Latest"
     tag_name                = "frontend-asg"
@@ -140,7 +132,32 @@ autoscaling_groups = {
   }
 }
 
-frontend_tg_name = "frontend-tg"
-frontend_lb_name = "frontend-alb"
-backend_tg_name  = "backend-tg"
-backend_lb_name  = "backend-alb"
+# ✅ Load Balancer values
+frontend_tg_name           = "frontend-tg"
+frontend_lb_name           = "frontend-alb"
+frontend_tg_port           = 80
+frontend_tg_protocol       = "HTTP"
+frontend_listener_port     = 80
+frontend_listener_protocol = "HTTP"
+
+backend_tg_name            = "backend-tg"
+backend_lb_name            = "backend-alb"
+backend_tg_port            = 80
+backend_tg_protocol        = "HTTP"
+backend_listener_port      = 80
+backend_listener_protocol  = "HTTP"
+
+# ✅ Bastion
+bastion_ami           = "ami-0d03cb826412c6b0f"
+bastion_instance_type = "t2.micro"
+bastion_key_name      = "fun"
+
+# ✅ RDS
+db_identifier       = "book-rds"
+subnet_group_name   = "db-subnet-group"
+db_name             = "mydb"
+db_username         = "admin"
+db_password         = "password123"
+db_instance_class   = "db.t3.micro"
+db_engine           = "mysql"
+db_engine_version   = "8.0.32"
