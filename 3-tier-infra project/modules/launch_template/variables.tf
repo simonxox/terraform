@@ -1,12 +1,23 @@
+variable "name" {
+  type = string
+}
 
-variable "launch_templates" {
-  type = map(object({
-    name               = string
-    description        = string
-    ami_name           = string
-    ami_owner          = string
-    instance_type      = string
-    key_name           = string
-    security_group_ids = list(string)
-  }))
+variable "description" {
+  type = string
+}
+
+variable "ami_id" {
+  type = string
+}
+
+variable "instance_type" {
+  type = string
+}
+
+variable "key_name" {
+  type = string
+}
+
+variable "security_group_ids" {
+  type = list(string)
 }

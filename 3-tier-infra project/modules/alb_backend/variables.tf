@@ -1,4 +1,3 @@
-
 variable "tg_name" {
   type = string
 }

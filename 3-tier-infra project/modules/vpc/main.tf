@@ -27,3 +27,11 @@ resource "aws_subnet" "private_subnets" {
     Name = each.value["name"]
   }
 }
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.three_tier.id
+
+  tags = {
+    Name = "${var.vpc_name}-igw"
+  }
+}
+

@@ -1,4 +1,3 @@
-
 resource "aws_lb_target_group" "frontend" {
   name     = var.tg_name
   port     = var.tg_port
