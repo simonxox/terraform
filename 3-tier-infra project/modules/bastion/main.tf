@@ -6,6 +6,8 @@ resource "aws_instance" "bastion" {
   key_name               = var.key_name
   security_groups        = var.security_group_ids
 
+
+
   tags = {
     Name = var.name
   }
