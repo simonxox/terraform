@@ -36,4 +36,4 @@ terraform apply
 - Terraform v1.3+
 
 ## 🙌 Author
-Simon 
+SIMON
