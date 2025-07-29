@@ -27,3 +27,5 @@ resource "aws_db_instance" "rds" {
     DB_identifier = var.db_identifier
   }
 }
+
+
